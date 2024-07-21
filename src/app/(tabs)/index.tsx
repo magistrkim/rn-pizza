@@ -1,6 +1,6 @@
-import Colors from "@/src/constants/Colors";
+
 import { StyleSheet, View, Text, Image, ScrollView } from "react-native";
-import ProductListItem from "@/src/components/ProductListItem";
+import ProductListItem from "@/components/ProductListItem";
 
 const MenuScreen = () => {
   return (

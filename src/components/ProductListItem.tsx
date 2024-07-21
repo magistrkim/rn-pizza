@@ -1,6 +1,11 @@
-import products from "@/assets/data/products";
-import Colors from "@/src/constants/Colors";
+import products from "@assets/data/products";
+import Colors from "@/constants/Colors";
 import { StyleSheet, View, Text, Image } from "react-native";
+
+
+export const defaultPizzaImage =
+  "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/default.png";
+
 
 const ProductListItem = () => {
   return (
@@ -8,7 +13,7 @@ const ProductListItem = () => {
       {products.map((product) => (
         <View key={product.id}>
           <Image
-            source={{ uri: product.image }}
+            source={{ uri: product.image || defaultPizzaImage }}
             alt="product image"
             style={styles.image}
           />

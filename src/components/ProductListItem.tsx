@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     flex: 1,
     maxWidth: "50%",
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 18,

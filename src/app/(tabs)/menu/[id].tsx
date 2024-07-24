@@ -4,10 +4,15 @@ import products from "@assets/data/products";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { defaultPizzaImage } from "@/components/ProductListItem";
 import Colors, { sizes } from "@/constants/Colors";
+import Button from "@/components/Button";
 
 const ProductDetailPage = () => {
   const { id } = useLocalSearchParams();
   const [selectedSize, setSelectedSize] = useState("L");
+
+  const addToCart = () => {
+    console.warn("Adding to cart size:", selectedSize);
+  };
 
   const product = products.find((item) => item.id.toString() === id);
   if (!product) {
@@ -31,7 +36,7 @@ const ProductDetailPage = () => {
               {
                 backgroundColor:
                   selectedSize === size
-                    ? Colors.light.tint
+                    ? Colors.light.accent
                     : Colors.dark.backgroundSize,
               },
             ]}
@@ -53,6 +58,7 @@ const ProductDetailPage = () => {
         ))}
       </View>
       <Text style={styles.price}>Price: ${product.price}</Text>
+      <Button text="Add to cart" onPress={addToCart} />
     </View>
   );
 };
@@ -64,6 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.text,
     flex: 1,
     padding: 20,
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 18,
@@ -73,7 +80,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: "700",
-    color: Colors.light.tint,
+    marginTop: "auto",
   },
   image: {
     width: "100%",

@@ -3,7 +3,7 @@ import React from "react";
 import products from "@assets/data/products";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { defaultPizzaImage } from "@/components/ProductListItem";
-import Colors from "@/constants/Colors";
+import Colors, { sizes } from "@/constants/Colors";
 
 const ProductDetailPage = () => {
   const { id } = useLocalSearchParams();
@@ -20,7 +20,13 @@ const ProductDetailPage = () => {
         style={styles.image}
       />
       <Text style={styles.title}>Select size: </Text>
-      <Text style={styles.title}>{product.name}</Text>
+      <View style={styles.sizesWrapper}>
+        {sizes.map((size, index) => (
+          <View key={index} style={styles.sizeItem}>
+            <Text style={styles.sizeText}>{size}</Text>
+          </View>
+        ))}
+      </View>
       <Text style={styles.price}>Price: ${product.price}</Text>
     </View>
   );
@@ -32,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.dark.text,
     flex: 1,
-    padding: 16,
+    padding: 20,
   },
   title: {
     fontSize: 18,
@@ -47,5 +53,24 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     aspectRatio: 1,
+    marginBottom: 20,
+  },
+  sizesWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 20,
+  },
+  sizeItem: {
+    backgroundColor: Colors.light.backgroundSize,
+    width: 50,
+    aspectRatio: 1,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  sizeText: {
+    fontSize: 20,
+    fontWeight: "500",
   },
 });

@@ -1,5 +1,5 @@
-import { View, Text, Image, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
+import React, { useState } from "react";
 import products from "@assets/data/products";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { defaultPizzaImage } from "@/components/ProductListItem";
@@ -7,6 +7,7 @@ import Colors, { sizes } from "@/constants/Colors";
 
 const ProductDetailPage = () => {
   const { id } = useLocalSearchParams();
+  const [selectedSize, setSelectedSize] = useState("L");
 
   const product = products.find((item) => item.id.toString() === id);
   if (!product) {
@@ -22,9 +23,33 @@ const ProductDetailPage = () => {
       <Text style={styles.title}>Select size: </Text>
       <View style={styles.sizesWrapper}>
         {sizes.map((size, index) => (
-          <View key={index} style={styles.sizeItem}>
-            <Text style={styles.sizeText}>{size}</Text>
-          </View>
+          <Pressable
+            onPress={() => setSelectedSize(size)}
+            key={index}
+            style={[
+              styles.sizeItem,
+              {
+                backgroundColor:
+                  selectedSize === size
+                    ? Colors.light.tint
+                    : Colors.dark.backgroundSize,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.sizeText,
+                {
+                  color:
+                    selectedSize === size
+                      ? Colors.dark.text
+                      : Colors.light.text,
+                },
+              ]}
+            >
+              {size}
+            </Text>
+          </Pressable>
         ))}
       </View>
       <Text style={styles.price}>Price: ${product.price}</Text>

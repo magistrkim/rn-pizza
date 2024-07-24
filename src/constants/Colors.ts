@@ -1,4 +1,4 @@
-const tintColorLight = "#2E8B57";
+const tintColorLight = "#008080";
 const tintColorDark = "#fff";
 
 export const sizes = ["S", "M", "L", "XL"];

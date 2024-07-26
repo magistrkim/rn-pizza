@@ -9,7 +9,8 @@ const CartScreen = () => {
     <View>
       <FlatList
         data={items}
-        renderItem={({ item }) => <CartListItem cartItem={item} />}
+              renderItem={({ item }) => <CartListItem cartItem={item} />}
+              contentContainerStyle={{padding: 10, gap: 10}}
       />
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>

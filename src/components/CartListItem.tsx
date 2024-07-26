@@ -63,13 +63,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   title: {
-    fontWeight: "500",
+    fontWeight: "600",
     fontSize: 16,
     marginBottom: 5,
   },
   subtitleContainer: {
     flexDirection: "row",
-    gap: 5,
+    gap: 10,
   },
   quantitySelector: {
     flexDirection: "row",

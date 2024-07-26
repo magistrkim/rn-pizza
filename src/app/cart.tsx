@@ -5,14 +5,17 @@ import CartListItem from "@/components/CartListItem";
 import Button from "@/components/Button";
 
 const CartScreen = () => {
-  const { items } = useCart();
+  const { items, total } = useCart();
   return (
-    <View style={{ padding: 10 }}>
+    <View style={{ padding: 16 }}>
       <FlatList
         data={items}
         renderItem={({ item }) => <CartListItem cartItem={item} />}
-        contentContainerStyle={{ padding: 10, gap: 10 }}
+        contentContainerStyle={{ gap: 10 }}
       />
+      <Text style={{ marginTop: 20, fontSize: 20, fontWeight: "500" }}>
+        Total: ${total}
+      </Text>
       <Button text="Checkout" />
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>

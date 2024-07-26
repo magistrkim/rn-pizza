@@ -5,11 +5,13 @@ import { createContext, PropsWithChildren, useContext, useState } from "react";
 type CartType = {
   items: CartItem[];
   addItem: (product: Product, size: CartItem["size"]) => void;
+  updateQuantity: (itemId: string, amount: -1 | 1) => void;
 };
 
 const CartContext = createContext<CartType>({
   items: [],
   addItem: () => {},
+  updateQuantity: () => {},
 });
 
 const CartProvider = ({ children }: PropsWithChildren) => {
@@ -27,10 +29,19 @@ const CartProvider = ({ children }: PropsWithChildren) => {
     };
     setItems([newCartItem, ...items]);
   };
-  // updateQuantity function
+  const updateQuantity = (itemId: string, amount: -1 | 1) => {
+    const updatedItems = items
+      .map((item) =>
+        item.id !== itemId
+          ? item
+          : { ...item, quantity: item.quantity + amount }
+      )
+      .filter((item) => item.quantity > 0);
+    setItems(updatedItems);
+  };
 
   return (
-    <CartContext.Provider value={{ items, addItem }}>
+    <CartContext.Provider value={{ items, addItem, updateQuantity }}>
       {children}
     </CartContext.Provider>
   );

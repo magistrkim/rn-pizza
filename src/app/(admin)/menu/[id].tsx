@@ -14,15 +14,8 @@ const ProductDetailPage = () => {
   const [selectedSize, setSelectedSize] = useState<PizzaSize>("L");
 
   const product = products.find((item) => item.id.toString() === id);
-  const router = useRouter();
 
-  const addToCart = () => {
-    if (!product) {
-      return <Text>Product is not found</Text>;
-    }
-    addItem(product, selectedSize);
-    router.push("/cart");
-  };
+
   if (!product) {
     return <Text>Product is not found</Text>;
   }
@@ -33,40 +26,8 @@ const ProductDetailPage = () => {
         source={{ uri: product.image || defaultPizzaImage }}
         style={styles.image}
       />
-      <Text style={styles.title}>Select size: </Text>
-      <View style={styles.sizesWrapper}>
-        {sizes.map((size, index) => (
-          <Pressable
-            onPress={() => setSelectedSize(size)}
-            key={index}
-            style={[
-              styles.sizeItem,
-              {
-                backgroundColor:
-                  selectedSize === size
-                    ? Colors.light.accent
-                    : Colors.dark.backgroundSize,
-              },
-            ]}
-          >
-            <Text
-              style={[
-                styles.sizeText,
-                {
-                  color:
-                    selectedSize === size
-                      ? Colors.dark.text
-                      : Colors.light.text,
-                },
-              ]}
-            >
-              {size}
-            </Text>
-          </Pressable>
-        ))}
-      </View>
+      <Text style={styles.title}>{product.name}</Text>
       <Text style={styles.price}>Price: ${product.price}</Text>
-      <Button text="Add to cart" onPress={addToCart} />
     </View>
   );
 };
@@ -78,39 +39,19 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.dark.text,
     flex: 1,
     padding: 20,
-    justifyContent: "space-between",
   },
   title: {
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: "600",
     marginVertical: 10,
   },
   price: {
     fontSize: 18,
     fontWeight: "700",
-    marginTop: "auto",
   },
   image: {
     width: "100%",
     aspectRatio: 1,
     marginBottom: 20,
-  },
-  sizesWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 20,
-  },
-  sizeItem: {
-    backgroundColor: Colors.light.backgroundSize,
-    width: 50,
-    aspectRatio: 1,
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  sizeText: {
-    fontSize: 20,
-    fontWeight: "500",
   },
 });

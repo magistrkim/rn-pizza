@@ -1,26 +1,40 @@
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import React, { useState } from "react";
 import products from "@assets/data/products";
-import { useLocalSearchParams, Stack, useRouter } from "expo-router";
+import { useLocalSearchParams, Stack, useRouter, Link } from "expo-router";
 import { defaultPizzaImage } from "@/components/ProductListItem";
-import Colors, { sizes } from "@/constants/Colors";
-import Button from "@/components/Button";
-import { useCart } from "@/providers/CartProvider";
-import { PizzaSize } from "@/types";
+import Colors from "@/constants/Colors";
+import { FontAwesome } from "@expo/vector-icons";
 
 const ProductDetailPage = () => {
   const { id } = useLocalSearchParams();
-  const { addItem } = useCart();
-  const [selectedSize, setSelectedSize] = useState<PizzaSize>("L");
 
   const product = products.find((item) => item.id.toString() === id);
-
 
   if (!product) {
     return <Text>Product is not found</Text>;
   }
   return (
     <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          title: "ItemPage",
+          headerRight: () => (
+            <Link href={`/(admin)/menu/create?id=${id}`} asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="pencil"
+                    size={25}
+                    color={Colors.light.tint}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
+          ),
+        }}
+      />
       <Stack.Screen options={{ title: product.name }} />
       <Image
         source={{ uri: product.image || defaultPizzaImage }}

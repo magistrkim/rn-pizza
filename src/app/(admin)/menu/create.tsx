@@ -14,13 +14,16 @@ import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
 import { defaultPizzaImage } from "@/components/ProductListItem";
 import * as ImagePicker from "expo-image-picker";
-import { Stack } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 
 const CreateProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [error, setError] = useState("");
   const [image, setImage] = useState<string | null>(null);
+
+  const { id } = useLocalSearchParams();
+  const isUpdating = !!id;
 
   const validateInput = () => {
     setError("");
@@ -38,11 +41,28 @@ const CreateProduct = () => {
   const resetInputs = () => {
     setName(""), setPrice("");
   };
+
+  const onSubmit = () => {
+    if (isUpdating) {
+      onUpdate();
+    } else {
+      onCreate();
+    }
+  };
   const onCreate = () => {
     if (!validateInput()) {
       return;
     }
-    console.log(name, price);
+    console.log("Create", name, price);
+
+    //   save in the database
+    resetInputs();
+  };
+  const onUpdate = () => {
+    if (!validateInput()) {
+      return;
+    }
+    console.log("Update", name, price);
 
     //   save in the database
     resetInputs();
@@ -56,9 +76,6 @@ const CreateProduct = () => {
       aspect: [4, 3],
       quality: 1,
     });
-
-    console.log(result);
-
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
@@ -71,7 +88,11 @@ const CreateProduct = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View>
-          <Stack.Screen options={{ title: "Create Product" }} />
+          <Stack.Screen
+            options={{
+              title: isUpdating ? "Update Product" : "Create Product",
+            }}
+          />
           <Image
             source={{ uri: image || defaultPizzaImage }}
             style={styles.image}
@@ -96,7 +117,7 @@ const CreateProduct = () => {
             onChangeText={setPrice}
           />
           <Text style={styles.textError}>{error}</Text>
-          <Button text="Create" onPress={onCreate} />
+          <Button text={isUpdating ? "Update" : "Create"} onPress={onSubmit} />
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

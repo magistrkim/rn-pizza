@@ -8,6 +8,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
+  Pressable,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Colors from "@/constants/Colors";
@@ -15,6 +17,7 @@ import Button from "@/components/Button";
 import { defaultPizzaImage } from "@/components/ProductListItem";
 import * as ImagePicker from "expo-image-picker";
 import { Stack, useLocalSearchParams } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
 
 const CreateProduct = () => {
   const [name, setName] = useState("");
@@ -80,7 +83,21 @@ const CreateProduct = () => {
       setImage(result.assets[0].uri);
     }
   };
-
+  const onDelete = () => {
+    console.log("Delete item", id);
+  };
+  const confirmDelete = () => {
+    Alert.alert("Confirm", "Are you sure???", [
+      {
+        text: "Cancel",
+      },
+      {
+        text: "Remove",
+        style: "destructive",
+        onPress: onDelete,
+      },
+    ]);
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -118,6 +135,23 @@ const CreateProduct = () => {
           />
           <Text style={styles.textError}>{error}</Text>
           <Button text={isUpdating ? "Update" : "Create"} onPress={onSubmit} />
+          {isUpdating && (
+            <Pressable>
+              {({ pressed }) => (
+                <FontAwesome
+                  onPress={confirmDelete}
+                  name="trash"
+                  size={25}
+                  color={Colors.light.accent}
+                  style={{
+                    marginHorizontal: "auto",
+                    marginTop: 10,
+                    opacity: pressed ? 0.5 : 1,
+                  }}
+                />
+              )}
+            </Pressable>
+          )}
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>

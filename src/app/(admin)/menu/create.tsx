@@ -7,10 +7,12 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Image,
 } from "react-native";
 import React, { useState } from "react";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
+import { defaultPizzaImage } from "@/components/ProductListItem";
 
 const CreateProduct = () => {
   const [name, setName] = useState("");
@@ -49,6 +51,8 @@ const CreateProduct = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <View>
+          <Image source={{ uri: defaultPizzaImage }} style={styles.image} />
+          <Text style={styles.title}>Select Image</Text>
           <Text style={styles.label}>Name</Text>
           <TextInput
             placeholder="Name"
@@ -79,22 +83,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    justifyContent: "center",
+    justifyContent: "flex-start",
+  },
+  image: {
+    width: "70%",
+    aspectRatio: 1,
+    alignSelf: "center",
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: Colors.light.tint,
+    alignSelf: "center",
+    marginBottom: 10,
   },
   label: {
     fontSize: 16,
-    color: Colors.light.tint,
   },
   input: {
     backgroundColor: Colors.dark.text,
     padding: 16,
     borderRadius: 5,
     marginTop: 5,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   textError: {
     fontSize: 14,
     color: Colors.light.accent,
   },
-  image: {},
 });

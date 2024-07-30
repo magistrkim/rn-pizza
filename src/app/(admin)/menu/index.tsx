@@ -1,9 +1,6 @@
 import {
   StyleSheet,
   View,
-  Text,
-  Image,
-  ScrollView,
   FlatList,
 } from "react-native";
 import ProductListItem from "@/components/ProductListItem";

@@ -22,6 +22,7 @@ const SignUp = () => {
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
+        <Text style={styles.title}>Sign Up to PizzaApp</Text>
         <Text style={styles.label}>Username</Text>
         <TextInput
           placeholder="Username"
@@ -35,6 +36,7 @@ const SignUp = () => {
           style={styles.input}
           value={email}
           onChangeText={setEmail}
+          keyboardType="email-address"
         />
         <Text style={styles.label}>Password</Text>
         <TextInput
@@ -62,9 +64,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: "semibold",
-    color: Colors.light.tint,
+    fontWeight: "bold",
+    color: Colors.light.accent,
     alignSelf: "center",
+    marginBottom: 20,
   },
   label: {
     fontSize: 16,

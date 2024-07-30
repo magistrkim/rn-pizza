@@ -1,7 +1,7 @@
 import { PizzaSize } from "@/types";
 
 const tintColorLight = "#008080";
-const tintColorAccent = "#d44242";
+const tintColorAccent = "#8800e7";
 const tintColorDark = "#fff";
 
 export const sizes: PizzaSize[] = ["S", "M", "L", "XL"];

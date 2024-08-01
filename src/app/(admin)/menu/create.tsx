@@ -18,6 +18,7 @@ import { defaultPizzaImage } from "@/components/ProductListItem";
 import * as ImagePicker from "expo-image-picker";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
+import FormField from "@/components/FormField";
 
 const CreateProduct = () => {
   const [name, setName] = useState("");
@@ -117,21 +118,18 @@ const CreateProduct = () => {
           <Text onPress={pickImage} style={styles.title}>
             Select Image
           </Text>
-          <Text style={styles.label}>Name</Text>
-          <TextInput
+          <FormField
+            title="Name"
             placeholder="Name"
-            style={styles.input}
             value={name}
-            onChangeText={setName}
+            handleChangeText={setName}
           />
-
-          <Text style={styles.label}>Price</Text>
-          <TextInput
+          <FormField
+            title="Price"
+            placeholder="$ 9.90"
             value={price}
-            placeholder="$9.90"
-            style={styles.input}
+            handleChangeText={setPrice}
             keyboardType="numeric"
-            onChangeText={setPrice}
           />
           <Text style={styles.textError}>{error}</Text>
           <Button text={isUpdating ? "Update" : "Create"} onPress={onSubmit} />
@@ -178,16 +176,6 @@ const styles = StyleSheet.create({
     color: Colors.light.tint,
     alignSelf: "center",
     marginVertical: 20,
-  },
-  label: {
-    fontSize: 16,
-  },
-  input: {
-    backgroundColor: Colors.dark.text,
-    padding: 16,
-    borderRadius: 5,
-    marginTop: 5,
-    marginBottom: 10,
   },
   textError: {
     fontSize: 14,

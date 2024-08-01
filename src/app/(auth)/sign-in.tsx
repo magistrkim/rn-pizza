@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
 import { Link } from "expo-router";
+import FormField from "@/components/FormField";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -22,7 +23,21 @@ const SignIn = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <Text style={styles.title}>Sign In with Email</Text>
-        <Text style={styles.label}>Email</Text>
+        <FormField
+          title="Email"
+          placeholder="Email"
+          keyboardType="email-address"
+          value={email}
+          handleChangeText={setEmail}
+        />
+        <FormField
+          title="Password"
+          placeholder="Password"
+          keyboardType="email-address"
+          value={password}
+          handleChangeText={setPassword}
+        />
+        {/* <Text style={styles.label}>Email</Text>
         <TextInput
           placeholder="Email"
           style={styles.input}
@@ -36,7 +51,7 @@ const SignIn = () => {
           style={styles.input}
           value={password}
           onChangeText={setPassword}
-        />
+        /> */}
         <Button text="Sign In" onPress={() => console.log(email)} />
         <Link href="/sign-up" style={styles.title}>
           Do not have an account? Sign up

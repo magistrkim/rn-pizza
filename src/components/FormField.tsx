@@ -40,9 +40,9 @@ const FormField = ({
       {title === "Password" && (
         <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
           {!showPassword ? (
-            <FontAwesome name="eye" style={styles.icon} />
-          ) : (
             <FontAwesome name="eye-slash" style={styles.icon} />
+          ) : (
+            <FontAwesome name="eye" style={styles.icon} />
           )}
         </TouchableOpacity>
       )}

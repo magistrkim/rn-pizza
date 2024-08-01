@@ -3,7 +3,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
-  TextInput,
   StyleSheet,
   Platform,
 } from "react-native";
@@ -11,11 +10,33 @@ import React, { useState } from "react";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
 import { Link } from "expo-router";
+import FormField from "@/components/FormField";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const validateInput = () => {
+    setError("");
+    if (!email || !password || !name) {
+      setError("Please fill in all the fields");
+      return false;
+    }
+    return true;
+  };
+  const resetInputs = () => {
+    setName(""), setEmail(""), setPassword("");
+  };
+
+  const onSubmit = () => {
+    if (!validateInput()) {
+      return;
+    }
+    console.log("You sign in with", email);
+    resetInputs();
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -23,29 +44,28 @@ const SignUp = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <Text style={styles.title}>Sign Up to PizzaApp</Text>
-        <Text style={styles.label}>Username</Text>
-        <TextInput
+        <FormField
+          title="Username"
           placeholder="Username"
-          style={styles.input}
           value={name}
-          onChangeText={setName}
+          handleChangeText={setName}
         />
-        <Text style={styles.label}>Email</Text>
-        <TextInput
+        <FormField
+          title="Email"
           placeholder="Email"
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
           keyboardType="email-address"
+          value={email}
+          handleChangeText={setEmail}
         />
-        <Text style={styles.label}>Password</Text>
-        <TextInput
+        <FormField
+          title="Password"
           placeholder="Password"
-          style={styles.input}
+          keyboardType="email-address"
           value={password}
-          onChangeText={setPassword}
+          handleChangeText={setPassword}
         />
-        <Button text="Sign up" onPress={() => console.log(name, email)} />
+        <Text style={styles.textError}>{error}</Text>
+        <Button text="Sign up" onPress={onSubmit} />
         <Link href="/sign-in" style={styles.title}>
           Do you have an account? Sign in
         </Link>
@@ -68,16 +88,6 @@ const styles = StyleSheet.create({
     color: Colors.light.accent,
     alignSelf: "center",
     marginBottom: 20,
-  },
-  label: {
-    fontSize: 16,
-  },
-  input: {
-    backgroundColor: Colors.dark.text,
-    padding: 16,
-    borderRadius: 5,
-    marginTop: 10,
-    marginBottom: 10,
   },
   textError: {
     fontSize: 14,

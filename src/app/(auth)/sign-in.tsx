@@ -3,7 +3,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
-  TextInput,
   StyleSheet,
   Platform,
 } from "react-native";
@@ -16,6 +15,27 @@ import FormField from "@/components/FormField";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const validateInput = () => {
+    setError("");
+    if (!email || !password) {
+      setError("Please fill in all the fields");
+      return false;
+    }
+    return true;
+  };
+  const resetInputs = () => {
+    setEmail(""), setPassword("");
+  };
+
+  const onSubmit = () => {
+    if (!validateInput()) {
+      return;
+    }
+    console.log("You sign in with", email);
+    resetInputs();
+  };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -37,22 +57,8 @@ const SignIn = () => {
           value={password}
           handleChangeText={setPassword}
         />
-        {/* <Text style={styles.label}>Email</Text>
-        <TextInput
-          placeholder="Email"
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-        <Text style={styles.label}>Password</Text>
-        <TextInput
-          placeholder="Password"
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-        /> */}
-        <Button text="Sign In" onPress={() => console.log(email)} />
+        <Text style={styles.textError}>{error}</Text>
+        <Button text="Sign In" onPress={onSubmit} />
         <Link href="/sign-up" style={styles.title}>
           Do not have an account? Sign up
         </Link>
@@ -75,16 +81,6 @@ const styles = StyleSheet.create({
     color: Colors.light.accent,
     alignSelf: "center",
     marginBottom: 20,
-  },
-  label: {
-    fontSize: 16,
-  },
-  input: {
-    backgroundColor: Colors.dark.text,
-    padding: 16,
-    borderRadius: 5,
-    marginTop: 10,
-    marginBottom: 10,
   },
   textError: {
     fontSize: 14,

@@ -65,7 +65,7 @@ const SignUp = () => {
           handleChangeText={setPassword}
         />
         <Text style={styles.textError}>{error}</Text>
-        <Button text="Sign up" onPress={onSubmit} />
+        <Button text="Create account" onPress={onSubmit} />
         <Link href="/sign-in" style={styles.title}>
           Do you have an account? Sign in
         </Link>

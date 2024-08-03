@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import React from "react";
 import { useLocalSearchParams, Stack, Link } from "expo-router";
 import orders from "@assets/data/orders";
 import Colors from "@/constants/Colors";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { defaultPizzaImage } from "@/components/ProductListItem";
 
 dayjs.extend(relativeTime);
 
@@ -18,14 +19,38 @@ const OrderItemPage = () => {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: `Order # ${order.id}` }} />
-
-      <Pressable style={styles.itemWrapper}>
+      <View style={styles.itemWrapper}>
         <View>
           <Text style={styles.title}>Order # {order.id}</Text>
           <Text>{timeAgo}</Text>
         </View>
         <Text>{order.status}</Text>
-      </Pressable>
+      </View>
+      <FlatList
+        data={order.order_items}
+        contentContainerStyle={{ gap: 10 }}
+        renderItem={({ item }) => (
+          <View style={styles.orderWrapper}>
+            <Image
+              source={{ uri: item.products.image || defaultPizzaImage }}
+              style={styles.image}
+              resizeMode="contain"
+            />
+            <View style={{ flex: 1, marginLeft: 10 }}>
+              <Text style={styles.title}>{item.products.name}</Text>
+              <View style={styles.subtitleContainer}>
+                <Text style={styles.price}>
+                  ${item.products.price.toFixed(2)}
+                </Text>
+                <Text>Size: {item.size}</Text>
+              </View>
+            </View>
+            <View>
+              <Text style={styles.quantity}>{item.quantity}</Text>
+            </View>
+          </View>
+        )}
+      />
     </View>
   );
 };
@@ -44,21 +69,36 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: 10,
+  },
+  orderWrapper: {
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 10,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     fontSize: 18,
     fontWeight: "600",
     marginVertical: 10,
   },
+  subtitleContainer: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  quantity: {
+    fontWeight: "600",
+    fontSize: 20,
+  },
   price: {
-    fontSize: 18,
-    fontWeight: "700",
-    marginTop: "auto",
+    color: Colors.light.tint,
+    fontWeight: "bold",
   },
   image: {
-    width: "100%",
+    width: "20%",
     aspectRatio: 1,
-    marginBottom: 20,
   },
   sizesWrapper: {
     flexDirection: "row",
@@ -72,7 +112,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 20,
   },
   sizeText: {
     fontSize: 20,

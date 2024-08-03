@@ -8,11 +8,6 @@ import products from "@assets/data/products";
 
 const MenuScreen = () => {
   return (
-    // <ScrollView>
-    //   <View style={styles.container}>
-    //     <ProductListItem />
-    //   </View>
-    // </ScrollView>
     <View>
       <FlatList
         data={products}

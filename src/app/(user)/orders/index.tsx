@@ -10,7 +10,7 @@ const index = () => {
         data={orders}
         renderItem={({ item }) => <OrderListItem order={item} />}
         numColumns={1}
-        contentContainerStyle={{ gap: 20, padding: 20 }}
+        contentContainerStyle={{ gap: 10, padding: 10 }}
 
       />
     </View>

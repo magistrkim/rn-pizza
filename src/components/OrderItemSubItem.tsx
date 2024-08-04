@@ -5,27 +5,25 @@ import Colors from "@/constants/Colors";
 import { defaultPizzaImage } from "./ProductListItem";
 
 type OrderItemSubItemProps = {
-  order_items: OrderItem;
+  item: OrderItem;
 };
-const OrderItemSubItem = ({ order_items }: OrderItemSubItemProps) => {
+const OrderItemSubItem = ({ item }: OrderItemSubItemProps) => {
   return (
     <View style={styles.wrapper}>
       <Image
-        source={{ uri: order_items.products.image || defaultPizzaImage }}
+        source={{ uri: item.products.image || defaultPizzaImage }}
         style={styles.image}
         resizeMode="cover"
       />
       <View style={{ flex: 1, marginLeft: 10 }}>
-        <Text style={styles.title}>{order_items.products.name}</Text>
+        <Text style={styles.title}>{item.products.name}</Text>
         <View style={styles.subWrapper}>
-          <Text style={styles.price}>
-            ${order_items.products.price.toFixed(2)}
-          </Text>
-          <Text style={styles.size}>Size: {order_items.size}</Text>
+          <Text style={styles.price}>${item.products.price.toFixed(2)}</Text>
+          <Text style={styles.size}>Size: {item.size}</Text>
         </View>
       </View>
       <View>
-        <Text style={styles.quantity}>{order_items.quantity}</Text>
+        <Text style={styles.quantity}>{item.quantity}</Text>
       </View>
     </View>
   );

@@ -29,7 +29,7 @@ const OrderItemPage = () => {
       <FlatList
         data={order.order_items}
         contentContainerStyle={{ gap: 10 }}
-        renderItem={({ item }) => <OrderItemSubItem order_items={item} />}
+        renderItem={({ item }) => <OrderItemSubItem item={item} />}
       />
     </View>
   );

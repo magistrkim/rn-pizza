@@ -1,11 +1,11 @@
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import React from "react";
-import { useLocalSearchParams, Stack, Link } from "expo-router";
+import { useLocalSearchParams, Stack } from "expo-router";
 import orders from "@assets/data/orders";
 import Colors from "@/constants/Colors";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { defaultPizzaImage } from "@/components/ProductListItem";
+import OrderItemSubItem from "@/components/OrderItemSubItem";
 
 dayjs.extend(relativeTime);
 
@@ -29,27 +29,7 @@ const OrderItemPage = () => {
       <FlatList
         data={order.order_items}
         contentContainerStyle={{ gap: 10 }}
-        renderItem={({ item }) => (
-          <View style={styles.orderWrapper}>
-            <Image
-              source={{ uri: item.products.image || defaultPizzaImage }}
-              style={styles.image}
-              resizeMode="contain"
-            />
-            <View style={{ flex: 1, marginLeft: 10 }}>
-              <Text style={styles.title}>{item.products.name}</Text>
-              <View style={styles.subtitleContainer}>
-                <Text style={styles.price}>
-                  ${item.products.price.toFixed(2)}
-                </Text>
-                <Text>Size: {item.size}</Text>
-              </View>
-            </View>
-            <View>
-              <Text style={styles.quantity}>{item.quantity}</Text>
-            </View>
-          </View>
-        )}
+        renderItem={({ item }) => <OrderItemSubItem order_items={item} />}
       />
     </View>
   );
@@ -71,50 +51,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
-  orderWrapper: {
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 10,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   title: {
     fontSize: 18,
     fontWeight: "600",
     marginVertical: 10,
-  },
-  subtitleContainer: {
-    flexDirection: "row",
-    gap: 10,
-  },
-  quantity: {
-    fontWeight: "600",
-    fontSize: 20,
-  },
-  price: {
-    color: Colors.light.tint,
-    fontWeight: "bold",
-  },
-  image: {
-    width: "20%",
-    aspectRatio: 1,
-  },
-  sizesWrapper: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginVertical: 20,
-  },
-  sizeItem: {
-    backgroundColor: Colors.light.backgroundSize,
-    width: 50,
-    aspectRatio: 1,
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  sizeText: {
-    fontSize: 20,
-    fontWeight: "500",
   },
 });

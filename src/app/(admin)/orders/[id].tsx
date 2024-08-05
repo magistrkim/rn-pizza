@@ -6,6 +6,7 @@ import Colors from "@/constants/Colors";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import OrderItemSubItem from "@/components/OrderItemSubItem";
+import OrderListItem from "@/components/OrderListItem";
 
 dayjs.extend(relativeTime);
 
@@ -19,13 +20,7 @@ const OrderItemPage = () => {
   return (
     <View style={styles.container}>
       <Stack.Screen options={{ title: `Order # ${order.id}` }} />
-      <View style={styles.itemWrapper}>
-        <View>
-          <Text style={styles.title}>Order # {order.id}</Text>
-          <Text>{timeAgo}</Text>
-        </View>
-        <Text>{order.status}</Text>
-      </View>
+      <OrderListItem order={order} />
       <FlatList
         data={order.order_items}
         contentContainerStyle={{ gap: 10 }}
@@ -40,20 +35,7 @@ export default OrderItemPage;
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+    gap: 10,
     flex: 1,
-  },
-  itemWrapper: {
-    backgroundColor: Colors.light.background,
-    padding: 20,
-    borderRadius: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "600",
-    marginVertical: 10,
-  },
+  }
 });

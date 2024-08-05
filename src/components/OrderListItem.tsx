@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { Order } from "@/types";
 import React from "react";
-import { Link } from "expo-router";
+import { Link, useSegments} from "expo-router";
 import Colors from "@/constants/Colors";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -14,8 +14,10 @@ type OrderListItemProps = {
 
 const OrderListItem = ({ order }: OrderListItemProps) => {
   const timeAgo = dayjs(order.created_at).fromNow();
+
+    const segments = useSegments();
   return (
-    <Link href={`/orders/${order.id}`} asChild>
+    <Link href={`/${segments[0]}/orders/${order.id}`} asChild>
       <Pressable style={styles.container}>
         <View>
           <Text style={styles.title}>Order # {order.id}</Text>

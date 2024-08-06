@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import React from "react";
 import { useLocalSearchParams, Stack } from "expo-router";
 import orders from "@assets/data/orders";
-import Colors from "@/constants/Colors";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import OrderItemSubItem from "@/components/OrderItemSubItem";

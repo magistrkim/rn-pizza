@@ -7,7 +7,6 @@ import OrderListItem from "@/components/OrderListItem";
 import { OrderStatusList } from "@/types";
 import Colors from "@/constants/Colors";
 
-
 const OrderItemPage = () => {
   const { id } = useLocalSearchParams();
   const order = orders.find((item) => item.id.toString() === id);
@@ -24,8 +23,8 @@ const OrderItemPage = () => {
         renderItem={({ item }) => <OrderItemSubItem item={item} />}
         ListFooterComponent={() => (
           <>
-            <Text style={{ fontWeight: "bold" }}>Status</Text>
-            <View style={{ flexDirection: "row", gap: 5 }}>
+            <Text style={{ fontWeight: "bold", marginTop: 10 }}>Status</Text>
+            <View style={{ flexDirection: "row", gap: 10 }}>
               {OrderStatusList.map((status) => (
                 <Pressable
                   key={status}
@@ -67,5 +66,5 @@ const styles = StyleSheet.create({
     padding: 10,
     gap: 10,
     flex: 1,
-  }
+  },
 });

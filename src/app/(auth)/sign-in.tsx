@@ -5,17 +5,20 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   Platform,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
 import { Link } from "expo-router";
 import FormField from "@/components/FormField";
+import { supabase } from "@/lib/supabase";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validateInput = () => {
     setError("");
@@ -29,13 +32,21 @@ const SignIn = () => {
     setEmail(""), setPassword("");
   };
 
-  const onSubmit = () => {
+  const SignInWithEmail = async () => {
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) Alert.alert(error.message);
     if (!validateInput()) {
       return;
     }
-    console.log("You sign in with", email);
+    Alert.alert("You signed in successfully!");
     resetInputs();
+    setLoading(false);
   };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -58,7 +69,11 @@ const SignIn = () => {
           handleChangeText={setPassword}
         />
         <Text style={styles.textError}>{error}</Text>
-        <Button text="Sign In" onPress={onSubmit} />
+        <Button
+          text={loading ? "Signing In..." : "Sign in"}
+          onPress={SignInWithEmail}
+          disabled={loading}
+        />
         <Link href="/sign-up" style={styles.title}>
           Do not have an account? Sign up
         </Link>

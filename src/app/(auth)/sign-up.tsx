@@ -5,38 +5,49 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   Platform,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
 import { Link } from "expo-router";
 import FormField from "@/components/FormField";
+import { supabase } from "@/lib/supabase";
 
 const SignUp = () => {
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validateInput = () => {
     setError("");
-    if (!email || !password || !name) {
+    if (!email || !password) {
       setError("Please fill in all the fields");
       return false;
     }
     return true;
   };
   const resetInputs = () => {
-    setName(""), setEmail(""), setPassword("");
+    setEmail(""), setPassword("");
   };
-
-  const onSubmit = () => {
+  
+  const SignUpWithEmail = async () => {
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+    if (error) Alert.alert(error.message);
     if (!validateInput()) {
       return;
     }
-    console.log("You sign in with", email);
+    Alert.alert("You signed up successfully!");
     resetInputs();
+    setLoading(false);
   };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -44,12 +55,12 @@ const SignUp = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         <Text style={styles.title}>Sign Up to PizzaApp</Text>
-        <FormField
+        {/* <FormField
           title="Username"
           placeholder="Username"
           value={name}
           handleChangeText={setName}
-        />
+        /> */}
         <FormField
           title="Email"
           placeholder="Email"
@@ -65,7 +76,11 @@ const SignUp = () => {
           handleChangeText={setPassword}
         />
         <Text style={styles.textError}>{error}</Text>
-        <Button text="Create account" onPress={onSubmit} />
+        <Button
+          text={loading ? "Creating..." : "Create account"}
+          onPress={SignUpWithEmail}
+          disabled={loading}
+        />
         <Link href="/sign-in" style={styles.title}>
           Do you have an account? Sign in
         </Link>

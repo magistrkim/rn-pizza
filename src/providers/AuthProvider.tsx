@@ -8,6 +8,12 @@ import {
   useState,
 } from "react";
 
+interface Profile {
+  id: string;
+  group: string;
+  // Add other properties of the profile as needed
+}
+
 type AuthData = {
   session: Session | null;
   loading: boolean;
@@ -24,7 +30,7 @@ const AuthContext = createContext<AuthData>({
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
   const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/badge/-Expo-black?style=for-the-badge&logoColor=white&logo=expo&color=000020" alt="expo" />
   </div>
 
-  <h3 align="center">React Native Job Finder App</h3>
+  <h3 align="center">React Native Pizza App </h3>
 
 <table>
   <tr>

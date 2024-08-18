@@ -36,9 +36,9 @@
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
-- Node.js
+- Supabase
+- TypeScript
 - React Native
-- Axios
 - Expo
 - Stylesheet
 

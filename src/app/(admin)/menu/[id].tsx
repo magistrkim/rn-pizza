@@ -1,18 +1,34 @@
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
-import React, { useState } from "react";
-import products from "@assets/data/products";
-import { useLocalSearchParams, Stack, useRouter, Link } from "expo-router";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
+import React from "react";
+import { useLocalSearchParams, Stack, Link } from "expo-router";
 import { defaultPizzaImage } from "@/components/ProductListItem";
 import Colors from "@/constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
+import { useProductById } from "@/api/products";
 
 const ProductDetailPage = () => {
-  const { id } = useLocalSearchParams();
+  const { id: idString } = useLocalSearchParams();
+  const id = parseFloat(
+    Array.isArray(idString)
+      ? idString[0]
+      : typeof idString === "string"
+      ? idString
+      : ""
+  );
+  const { data: product, error, isLoading } = useProductById(id);
 
-  const product = products.find((item) => item.id.toString() === id);
-
-  if (!product) {
-    return <Text>Product is not found</Text>;
+  if (isLoading) {
+    return <ActivityIndicator />;
+  }
+  if (error) {
+    return <Text>Failed to fetch products</Text>;
   }
   return (
     <View style={styles.container}>

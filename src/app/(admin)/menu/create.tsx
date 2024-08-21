@@ -2,7 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
@@ -16,9 +15,10 @@ import Colors from "@/constants/Colors";
 import Button from "@/components/Button";
 import { defaultPizzaImage } from "@/components/ProductListItem";
 import * as ImagePicker from "expo-image-picker";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import FormField from "@/components/FormField";
+import { useInsertProduct } from "@/api/products";
 
 const CreateProduct = () => {
   const [name, setName] = useState("");
@@ -28,6 +28,8 @@ const CreateProduct = () => {
 
   const { id } = useLocalSearchParams();
   const isUpdating = !!id;
+  const { mutate: insertProduct } = useInsertProduct();
+  const router = useRouter();
 
   const validateInput = () => {
     setError("");
@@ -59,8 +61,15 @@ const CreateProduct = () => {
     }
     console.log("Create", name, price);
 
-    //   save in the database
-    resetInputs();
+    insertProduct(
+      { name, price: parseFloat(price), image },
+      {
+        onSuccess: () => {
+          resetInputs();
+          router.back();
+        },
+      }
+    );
   };
   const onUpdate = () => {
     if (!validateInput()) {
@@ -129,7 +138,6 @@ const CreateProduct = () => {
             placeholder="$ 9.90"
             value={price}
             handleChangeText={setPrice}
-            keyboardType="numeric"
           />
           <Text style={styles.textError}>{error}</Text>
           <Button text={isUpdating ? "Update" : "Create"} onPress={onSubmit} />

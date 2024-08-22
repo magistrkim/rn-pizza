@@ -36,8 +36,8 @@
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
-- Supabase
 - TypeScript
+- Supabase
 - React Native
 - Expo
 - Stylesheet

@@ -13,7 +13,6 @@ export const useProductList = () => {
     },
   });
 };
-
 export const useProductById = (id: number) => {
   return useQuery({
     queryKey: ["products", id],
@@ -30,7 +29,6 @@ export const useProductById = (id: number) => {
     },
   });
 };
-
 export const useInsertProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({

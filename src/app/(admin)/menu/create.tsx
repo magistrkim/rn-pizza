@@ -19,6 +19,7 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import FormField from "@/components/FormField";
 import {
+  useDeleteProduct,
   useInsertProduct,
   useProductById,
   useUpdateProduct,
@@ -43,13 +44,14 @@ const CreateProduct = () => {
   const { mutate: insertProduct } = useInsertProduct();
   const { mutate: updateProduct } = useUpdateProduct();
   const { data: updatingProduct } = useProductById(id);
+  const { mutate: deleteProduct } = useDeleteProduct();
   const router = useRouter();
 
   useEffect(() => {
     if (updatingProduct) {
       setName(updatingProduct.name),
-      setPrice(updatingProduct.price.toString()),
-      setImage(updatingProduct.image);
+        setPrice(updatingProduct.price.toString()),
+        setImage(updatingProduct.image);
     }
   }, [updatingProduct]);
 
@@ -121,6 +123,12 @@ const CreateProduct = () => {
     }
   };
   const onDelete = () => {
+    deleteProduct(id, {
+      onSuccess: () => {
+        resetInputs();
+        router.replace("/(admin)");
+      },
+    });
     console.log("Delete item", id);
   };
   const confirmDelete = () => {

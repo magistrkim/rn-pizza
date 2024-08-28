@@ -5,7 +5,11 @@ import { useAdminOrdersList } from "@/api/orders";
 import { ActivityIndicator } from "react-native";
 
 const index = () => {
-  const { data: orders, isLoading, error } = useAdminOrdersList();
+  const {
+    data: orders,
+    isLoading,
+    error,
+  } = useAdminOrdersList({ archived: false });
   if (isLoading) {
     return <ActivityIndicator />;
   }

@@ -11,7 +11,8 @@ export const useAdminOrdersList = ({ archived = false }) => {
       const { data, error } = await supabase
         .from("orders")
         .select("*")
-        .in("status", activeStatus);
+        .in("status", activeStatus)
+        .order("created_at", { ascending: false });
       if (error) {
         throw new Error(error.message);
       }
@@ -19,6 +20,7 @@ export const useAdminOrdersList = ({ archived = false }) => {
     },
   });
 };
+
 export const useUserOrdersList = () => {
   const { session } = useAuth();
   const id = session?.user.id;
@@ -29,7 +31,8 @@ export const useUserOrdersList = () => {
       const { data, error } = await supabase
         .from("orders")
         .select("*")
-        .eq("user_id", id);
+        .eq("user_id", id)
+        .order("created_at", { ascending: false });
       if (error) {
         throw new Error(error.message);
       }
@@ -37,6 +40,7 @@ export const useUserOrdersList = () => {
     },
   });
 };
+
 export const useOrderById = (id: number) => {
   return useQuery({
     queryKey: ["orders", id],

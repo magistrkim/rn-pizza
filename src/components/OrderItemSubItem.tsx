@@ -3,9 +3,10 @@ import React from "react";
 import { OrderItem } from "@/types";
 import Colors from "@/constants/Colors";
 import { defaultPizzaImage } from "./ProductListItem";
+import { Tables } from "@/database.types";
 
 type OrderItemSubItemProps = {
-  item: OrderItem;
+  item: { products: Tables<"products"> } & Tables<"order_items">;
 };
 const OrderItemSubItem = ({ item }: OrderItemSubItemProps) => {
   return (

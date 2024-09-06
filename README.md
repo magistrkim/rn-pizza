@@ -21,11 +21,6 @@
     </td>
     <td align="center">
       <a href="https://www.linkedin.com/in/nataliya-kachor-522170271/" target="_blank">
-        <img src="https://github.com/magistrkim/react-native-job-app/assets/115700340/48c1135e-8813-4104-9bf9-c2c004670122" alt="Project Image" style="width: 300px;">
-      </a>
-    </td>
-    <td align="center">
-      <a href="https://www.linkedin.com/in/nataliya-kachor-522170271/" target="_blank">
         <img src="https://github.com/magistrkim/react-native-job-app/assets/115700340/f20bc658-214c-4426-8aed-ab4e828f827a" alt="Project Image" style="width: 300px;">
       </a>
     </td>
